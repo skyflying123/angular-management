@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app.home">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="../vendor/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../styles/user.css">
+	<script type="text/javascript" src="../vendor/js/angular.min.js"></script>
+	<script type="text/javascript" src="../vendor/js/jquery.min.js"></script>
+	<script type="text/javascript" src="../vendor/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../scripts/app.home.js"></script>
+	<script type="text/javascript" src="../scripts/controllers/home.js"></script>
+	<script type="text/javascript" src="../scripts/services/homeService.js"></script>
+	<script type="text/javascript" src="../scripts/controllers/user.js"></script>
+	<script type="text/javascript" src="../scripts/services/userService.js"></script>
+</head>
+<body>
+	<div class="list-container">
+		<div ng-controller="HomeController">
+			<h2>后台主页</h2>
+		</div>
+		<div class="list-time">
+			<p>当前时间是：2017年8月24 星期四</p>
+		</div>
+		<div class="list-contents" ng-controller="UserController">
+			<div class="list-mgmt">
+				<span>菜单管理</span>
+				<button type="button" class="butt" data-toggle="modal" data-target="#exampleModal1">添加</button>
+				<div class="mgmt-right">
+					<p>查询编号 </p> <input type="text" ng-model="id"><button ng-click="search()">确定</button>
+				</div>
+			</div>
+			<div class="list-content">
+				<div class="content-left">
+					左边
+				</div>
+				<div class="user-table content-right">	
+						<table>
+							<tr><th>编号</th><th>姓名</th><th>密码</th><th>状态</th><th>时间</th><th>修改</th></tr>
+							<tr ng-repeat="user in users track by user.id">
+								<td>{{user.id}}</td>
+								<td>{{user.loginname}}</td>
+								<td>{{user.password}}</td>
+								<td>{{user.status}}</td>
+								<td>{{user.createdate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+								<td><button type="button" class="" data-toggle="modal" data-target="#exampleModal" ng-click="edit(user.id,user.loginname,user.password,user.status)">修改</button> <input type="button" value="删除" ng-click="deleteUser(user.id)"></td>
+							</tr>
+						</table>
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="exampleModalLabel">员工信息修改</h4>
+					      </div>
+					      <div class="modal-body">
+					        <form>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">用户名：</label>
+					            <input type="text" class="form-control" id="recipient-name" ng-model="datas.loginname">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">密码：</label>
+					            <input type="text" class="form-control" id="recipient-password" ng-model="datas.password">
+					          </div>
+					          <div class="form-group">
+					            <label for="recipient-name" class="control-label">状态：</label>
+					            <input type="text" class="form-control" id="recipient-status" ng-model="datas.status">
+					          </div>
+					        </form>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					        <button id="save" type="button" class="btn btn-primary" ng-click="saveEdit()">保存</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<div class="list-page">
+						<span class="page-last" ng-click="lastPage()">上一页</span>
+						<span class="page-next" ng-click="nextPage()">下一页</span>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="exampleModalLabel">员工信息修改</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form>
+			          <div class="form-group">
+			            <label for="recipient-name" class="control-label">用户名：</label>
+			            <input type="text" class="form-control" id="recipient-name" ng-model="datas.loginname">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="control-label">密码：</label>
+			            <input type="text" class="form-control" id="recipient-password" ng-model="datas.password">
+			          </div>
+			          <div class="form-group">
+			            <label for="recipient-name" class="control-label">状态：</label>
+			            <input type="text" class="form-control" id="recipient-status" ng-model="datas.status">
+			          </div>
+			        </form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button id="add" type="button" class="btn btn-primary" ng-click="add()">添加</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>		
+	</div>
+	<script>
+	$('#add').click(function(){
+		console.log('sss')
+		$('#exampleModal1').modal('hide');
+	})	
+	$('#save').click(function(){
+		console.log('sss')
+		$('#exampleModal').modal('hide');
+	})
+	</script>	
+</body>
+</html>
